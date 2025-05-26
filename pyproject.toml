@@ -1,0 +1,13 @@
+[project]
+name = "vectormcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain>=0.1.0",
+    "mcp[cli]>=1.9.1",
+    "openai>=1.0.0",
+    "pydantic>=2.0.0",
+    "supabase>=2.0.0",
+]
