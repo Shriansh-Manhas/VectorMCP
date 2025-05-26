@@ -39,6 +39,14 @@ def GoogleDrive_search(ctx: Context, query: str, match_count: int = 5) -> list:
         for row in (res.data or [])
     ]
 
+@mcp.prompt()
+def handle_prompt(ctx: Context, messages: List[Dict]) -> str:
+    for message in reversed(messages):
+        if message["role"] == "user":
+            return f"You said: {message['content']}"
+    return "I didn't receive a user message."
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 4000))
     mcp.settings.host = "0.0.0.0"
