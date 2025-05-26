@@ -40,6 +40,7 @@ def GoogleDrive_search(ctx: Context, query: str, match_count: int = 5) -> list:
     ]
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 4000))  # Render will set PORT
+    port = int(os.environ.get("PORT", 4000))
+    mcp.settings.host = "0.0.0.0"
     mcp.settings.port = port
-    mcp.run(transport="sse", host="0.0.0.0")  # Bind to 0.0.0.0
+    mcp.run(transport="sse")
