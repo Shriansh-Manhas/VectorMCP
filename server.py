@@ -4,7 +4,9 @@ from mcp.server.fastmcp import FastMCP, Context
 from supabase import create_client
 import openai
 import os
-
+from starlette.applications import Starlette
+from starlette.routing import Mount, Host
+import json
 
 SUPABASE_URL = "https://kfsykxpudjoopziididi.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtmc3lreHB1ZGpvb3B6aWlkaWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwMjMzMzksImV4cCI6MjA2MzU5OTMzOX0.goGnx2jo84WBjISqCBGTZ62fnTD3a5G0wSQa05FGvZY"
@@ -39,16 +41,12 @@ def GoogleDrive_search(ctx: Context, query: str, match_count: int = 5) -> list:
         for row in (res.data or [])
     ]
 
-@mcp.prompt()
-def handle_prompt(ctx: Context, messages: List[Dict]) -> str:
-    for message in reversed(messages):
-        if message["role"] == "user":
-            return f"You said: {message['content']}"
-    return "I didn't receive a user message."
-
+app = Starlette(
+    routes=[
+        Mount('/', app=mcp.sse_app()),
+    ]
+)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 4000))
-    mcp.settings.host = "0.0.0.0"
-    mcp.settings.port = port
-    mcp.run(transport="sse")
+    import uvicorn
+    uvicorn.run(app)
