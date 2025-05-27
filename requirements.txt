@@ -4,6 +4,5 @@ uvicorn
 openai
 supabase
 python-dotenv
-mcp-fast
 mcp[cli]
 mcp
