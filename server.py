@@ -7,11 +7,26 @@ import os
 from starlette.applications import Starlette
 from starlette.routing import Mount, Host
 import json
+from dotenv import load_dotenv
 
-SUPABASE_URL = "https://kfsykxpudjoopziididi.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtmc3lreHB1ZGpvb3B6aWlkaWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwMjMzMzksImV4cCI6MjA2MzU5OTMzOX0.goGnx2jo84WBjISqCBGTZ62fnTD3a5G0wSQa05FGvZY"
+# Load environment variables from .env file
+load_dotenv()
 
-openai.api_key = "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"
+# Get environment variables
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+# Validate required environment variables
+if not SUPABASE_URL:
+    raise ValueError("SUPABASE_URL environment variable is required")
+if not SUPABASE_KEY:
+    raise ValueError("SUPABASE_KEY environment variable is required")
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY environment variable is required")
+
+# Set OpenAI API key
+openai.api_key = OPENAI_API_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
