@@ -169,10 +169,6 @@ VectorMCP/
 4. Add tests if applicable
 5. Submit a pull request
 
-## License
-
-[Add your license information here]
-
 ## Support
 
 For issues and questions:
